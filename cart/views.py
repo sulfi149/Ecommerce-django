@@ -15,8 +15,12 @@ def _Cart_id(request):
 
 def add_cart(request,product_id):
 
+    current_user = request.user
     product = Product.objects.get(id=product_id)
-    product_variation = []
+    if current_user.is_authenticated:
+            
+    else:
+        product_variation = []
     if request.method == 'POST':
         print(request.POST)
         for item in request.POST:
@@ -79,6 +83,8 @@ def add_cart(request,product_id):
         cart_item.save()
 
     return redirect('cart')
+
+    
 
 
 
@@ -149,7 +155,6 @@ def checkout(request,Total=0,quantity=0,cart_items=0):
         tax = (3*Total) /100
         grand_total = Total + tax   
     except ObjectDoesNotExist:
-
     
         pass
     
