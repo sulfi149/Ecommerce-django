@@ -1,0 +1,17 @@
+{% extends 'custom_admin/dashboard.html' %}
+{% load static %}
+
+  
+{% block content %}
+    
+    <div class="from-group container w-50 text-center p-3 my-5 bg-info">
+        <h1>Edit User</h1><br>
+        <form action=" " method="POST">
+            {% csrf_token %}
+            {{uform.as_p}}
+            <br>
+            <button class="btn btn-primary mb-4" type="submit" >Submit</button>
+    
+        </form>
+    </div>
+{% endblock  %}

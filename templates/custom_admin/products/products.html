@@ -1,0 +1,65 @@
+{% extends 'custom_admin/dashboard.html' %}
+{% load static %}
+
+  
+{% block content %}
+<section style="margin-top: 5rem;"></section>
+
+<div class="col-12">
+    <div class="card recent-sales overflow-auto">
+      
+      <div class="filter">
+        <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+          <li class="dropdown-header text-start">
+            <h6>Filter</h6>
+          </li>
+
+          <li><a class="dropdown-item" href="#">Today</a></li>
+          <li><a class="dropdown-item" href="#">This Month</a></li>
+          <li><a class="dropdown-item" href="#">This Year</a></li>
+        </ul>
+      </div>
+
+      <div class="card-body">
+       
+        <table class="table table-borderless datatable">
+          <thead>
+            <tr>
+              <th scope="col">Product Name</th>
+              <th scope="col">price</th>
+              <th scope="col">stock</th>
+              <th scope="col">category</th>
+              <th scope="col">modified_date</th>
+              
+            </tr>
+          </thead>
+          <tbody>
+            {% for cr in product_obj %}
+            <tr>
+              <!-- <th scope="row"><img class="img-fluid"  src="{{ cr.images.url }}" alt=""></th> -->
+              <!-- <th scope="row"><a href="#"></a></th> -->
+              <!-- <td>{{ cr.id}}</td> -->
+              <td>{{ cr.product_name}}</td>
+              <td>{{ cr.price}}</td>
+              <td>{{ cr.stock}}</td>
+              <td>{{ cr.category}}</td>
+              <td>{{ cr.modified_date}}</td>
+              
+              
+           
+         
+          {% endfor %}
+          
+          </tbody>
+        </table>
+
+      </div>
+
+    </div>
+  </div>
+  </section>
+
+
+  
+  {% endblock  %}

@@ -1,0 +1,70 @@
+{% extends 'custom_admin/dashboard.html' %}
+{% load static %}
+
+  
+{% block content %}
+    
+
+    <section class="section container" style="margin-top: 5rem;">
+        <div class="row ">
+          <div class="" style="width: 70%; margin-left: 20%;">
+    
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Add Variation Form </h5>
+    
+                <!-- General Form Elements -->
+                <form action="" enctype='multipart/form-data'  method="POST">
+                    {% csrf_token %}
+                  <div class="row mb-3">
+                    <label for="inputbox" class="col-sm-2 col-form-label">Product Name</label>
+                    <div class="col-sm-10">
+                        {{ vform.product_name }}
+                    </div>
+                  </div>
+                  
+                  <div class="row mb-3">
+                    <label for="inputtext" class="col-sm-2 col-form-label">Variation Category</label>
+                    <div class="col-sm-10">
+                        {{ vform.variation_category }}
+                    </div>
+                  </div>
+                   
+                  <div class="row mb-3">
+                    <label for="inputPassword" class="col-sm-2 col-form-label">Variation Value</label>
+                    <div class="col-sm-10">
+                        {{ vform.variation_val}}
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label for="inputPassword" class="col-sm-2 col-form-label">Is Active</label>
+                    <div class="col-sm-10">
+                        {{ vform.is_active }}
+    
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label for="inputNumber" class="col-sm-2 col-form-label">Created Date</label>
+                    <div class="col-sm-10">
+                        {{ vform.created_date}}
+    
+                  </div>
+
+                  <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label">Submit Button</label>
+                    <div class="col-sm-10">
+                      <button type="submit" class="btn btn-primary">Submit Form</button>
+                    </div>
+                  </div>
+    
+                </form><!-- End General Form Elements -->
+    
+              </div>
+            </div>
+    
+          </div>
+    
+        </div>
+      </section>
+    
+{% endblock  %}
