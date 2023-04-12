@@ -3,6 +3,7 @@
 
   
 {% block content %}
+    
 
     <section class="section container" style="margin-top: 5rem;">
         <div class="row ">
@@ -10,40 +11,65 @@
     
             <div class="card">
               <div class="card-body">
-                <h5 class="card-title">Add Category Form </h5>
+                <h5 class="card-title">Edit Product Form </h5>
     
                 <!-- General Form Elements -->
                 <form action="" enctype='multipart/form-data'  method="POST">
                     {% csrf_token %}
                   <div class="row mb-3">
-                    <label for="inputText" class="col-sm-2 col-form-label">Category Name</label>
+                    <label for="inputText" class="col-sm-2 col-form-label">Product Name</label>
                     <div class="col-sm-10">
-                        {{ cform.category_name }}
+                        {{ Eform.product_name }}
                     </div>
                   </div>
                   
+                  <div class="row mb-3">
+                    <label for="inputtext" class="col-sm-2 col-form-label">Category</label>
+                    <div class="col-sm-10">
+                        {{ Eform.category }}
+                    </div>
+                  </div>
                    
                   <div class="row mb-3">
                     <label for="inputPassword" class="col-sm-2 col-form-label">Slug</label>
                     <div class="col-sm-10">
-                        {{ cform.slug}}
+                        {{ Eform.slug}}
                     </div>
                   </div>
                   <div class="row mb-3">
                     <label for="inputPassword" class="col-sm-2 col-form-label">Description</label>
                     <div class="col-sm-10">
-                        {{ cform.description }}
+                        {{ Eform.description }}
     
                     </div>
                   </div>
                   <div class="row mb-3">
                     <label for="inputNumber" class="col-sm-2 col-form-label">Image</label>
                     <div class="col-sm-10">
-                        {{ cform.cat_image}}
+                        {{ Eform.image}}
     
                     </div>
                   </div>
-               
+                  <div class="row mb-3">
+                    <label for="inputNumber" class="col-sm-2 col-form-label">Price</label>
+                    <div class="col-sm-10">
+                        {{ Eform.price }}
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="inputNumber" class="col-sm-2 col-form-label">Stock</label>
+                    <div class="col-sm-10">
+                        {{ Eform.stock }}
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="inputBoolean" class="col-sm-2 col-form-label">Is_Available</label>
+                    <div class="col-sm-10">
+                        {{ Eform.is_available }}
+                    </div>
+                  </div>
     
                   <div class="row mb-3">
                     <label class="col-sm-2 col-form-label">Submit Button</label>

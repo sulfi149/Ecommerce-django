@@ -13,9 +13,7 @@
       <h4 class="card-title mb-4">Sign in</h4>
       <form action="{% url 'login' %}" method="POST">
         {% csrf_token %} 
-            {% for message in messages %}
-            <h6 class="bg-danger">{{ message }}</h6>
-            {% endfor %}
+        {% include 'store/includes/messages.html' %}
             <div class="form-group">
                 <input type="email" class="form-control" placeholder="Email Address" name="email" >
             </div> <!-- form-group// -->

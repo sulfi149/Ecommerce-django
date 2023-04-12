@@ -13,11 +13,16 @@ urlpatterns = [
       #category
       path('category_management/',views.CategoryManagement,name="category_management"),
       path('add_category/', views.add_category, name='add_category'),
+      path('edit_category/<str:pk>/', views.edit_category, name='edit_category'),
       #products 
       path('product_management/',views.ProductManagement,name="product_management"),
       path('add_product/', views.add_product, name='add_product'),
+      path('edit_product/<str:pk>/',views.edit_product,name="edit_product"),
       #variations
       path('variation_management/',views.Variation_management,name="variation_management"),
       path('add_variation/',views.Add_variation,name="add_variation"),
+      path('edit_variation/<str:pk>/',views.edit_variation,name="edit_variation"),
+      #orders
+      path('order_management/',views.order_management,name="order_management")
       
 ]

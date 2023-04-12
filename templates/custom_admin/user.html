@@ -57,11 +57,12 @@
                 {% else %}
                 <button type="submit" onclick="showConfirm()" class="btn btn-outline-warning">Unblock</button>
                 {% endif %}
+              </td>
                 <td> <button type="button" class="btn btn-info"><a style="text-decoration: none; color: white;" href="{% url 'edit_user' cr.id %}">EDIT</a></button></td>
             </tr>
            
          
-          {% endfor %}
+             {% endfor %}
           
           </tbody>
         </table>

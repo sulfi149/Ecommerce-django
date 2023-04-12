@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from accounts.models import Account
 from store.models import Variations
+from category.models import category
 from django.contrib import messages,auth
 from django.contrib.auth import logout,login,authenticate
 from .forms import UserForm,CForm,PForm,VForm
@@ -28,7 +29,7 @@ def login_admin(request):
                 return redirect('admin_dashboard')
                 
         messages.info(request, 'Invalid Password')
-        return render('custom_admin/admin_log.html')
+        return render(request,'custom_admin/admin_log.html')
     return render(request, 'custom_admin/admin_log.html')
      
         
@@ -117,6 +118,19 @@ def add_category(request):
     }
     return render(request, 'custom_admin/category/add_category.html', context)
 
+def edit_category(request,pk):
+    category_item = category.objects.get(id=pk)
+    if request.method == 'POST':
+         cform = CForm(request.POST,instance=category_item)
+         if cform.is_valid():
+              cform.save()
+              return redirect('category_management')
+    cform = CForm(instance=category_item)
+    context = {
+         'cform':cform,
+    } 
+    return render(request,'custom_admin/category/edit_category.html',context)
+
 # product management//////////////////////////////////////////////////////////////////////////////////////////
 
 def ProductManagement(request):
@@ -124,9 +138,7 @@ def ProductManagement(request):
     return render(request,'custom_admin/products/products.html',{'product_obj':product_obj})
 
 def add_product(request):
-
     if request.method == 'POST':
-
         pform = PForm(request.POST,request.FILES)
         print(pform.errors)
         if pform.is_valid():
@@ -139,14 +151,30 @@ def add_product(request):
         'pform': pform
     }
     return render(request, 'custom_admin/products/add_product.html', context)
+
+def edit_product(request,pk):
+    product= Product.objects.get(id=pk)
+
+    if request.method == "POST":
+        Eform = PForm(request.POST,instance=product)
+        if Eform.is_valid():
+            Eform.save()
+            return redirect('product_management')
+        
+    Eform = PForm(instance=product)    
+    context={
+        'Eform':Eform, 
+    }     
+    return render(request,'custom_admin/products/edit_product.html',context)
+
+
 # Variations to list ----------------------------------------------------------------------------------------
 def Variation_management(request):
     variation_obj = Variations.objects.all()
     return render(request,'custom_admin/variation/variation_list.html',{'variation_obj':variation_obj})
 
 def Add_variation(request):
-
-    
+        
         if request.method == 'POST':
                 vform = VForm(request.POST,request.FILES)                
                 if vform.is_valid():
@@ -160,7 +188,23 @@ def Add_variation(request):
             'vform':vform,
         }
         return render(request,'custom_admin/variation/add_variation.html',context)
-    
 
+def edit_variation(request,pk):
+    variation_item = Variations.objects.get(id=pk)
+    if request.method == 'POST':
+          vform = VForm(request.POST,instance=variation_item)
+          if vform.is_valid():
+               vform.save()
+               return redirect('variation_management')
+    vform= VForm(instance=variation_item) 
+    context = {
+         'vform': vform,
+    }                      
+    return render(request,'custom_admin/variation/edit_variation.html',context)   
+# -------------------------------------------------------------------------------------------------------------
+
+def order_management(request):
+    
+    return render(request,'custom_admin/orders/order_management.html')
 
     

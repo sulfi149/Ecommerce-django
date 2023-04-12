@@ -30,6 +30,7 @@
               <th scope="col">Variation Category</th>
               <th scope="col">Variation Value</th>             
               <th scope="col">Created_date</th>
+              <th scope="col">Update</th>
               
             </tr>
           </thead>
@@ -43,6 +44,7 @@
               <td>{{ cr.variation_category}}</td>
               <td>{{ cr.variation_val}}</td>  
               <td>{{ cr.created_date}}</td>
+              <td><a href="{% url 'edit_variation' cr.id %}" class="btn btn-default me-md-4" role="button">update</a></td>
               
               
            
