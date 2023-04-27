@@ -1,5 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+import datetime
+
+current_date = datetime.date.today()
 
 
 # Create your models here.
@@ -53,6 +56,10 @@ class Account(AbstractBaseUser):
     is_active  = models.BooleanField(default=False)
     is_superadmin  = models.BooleanField(default=False)
 
+    signup_day = models.CharField(max_length = 50,default=current_date.day)
+    signup_month = models.CharField(max_length = 50,default=current_date.month)
+    signup_year = models.CharField(max_length = 50,default=current_date.year)
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username','first_name','last_name']
 
@@ -98,3 +105,8 @@ class Address(models.Model):
     
     def __str__(self):
         return self.user.first_name
+
+class Return_request(models.Model):
+    user = models.ForeignKey(Account,on_delete = models.CASCADE)
+    order_number = models.CharField(max_length=15,default=1)
+    reason = models.CharField(max_length = 500)

@@ -1,5 +1,5 @@
 from django.shortcuts import render,get_object_or_404
-from store.models import Product
+from store.models import Product,Variations
 from category.models import category
 
 from cart.views import _Cart_id
@@ -74,3 +74,62 @@ def search(request):
     }
 
     return render(request,'store/store.html',context)
+
+
+def price_high(request):
+    products = Product.objects.all().filter(is_available=True).order_by('-price')
+    products_paginater = Paginator(products,8)
+    product_count = products.count()
+    # page_num = request.GET.get('page')
+    
+    # page = products_paginater.get_page(page_num)
+    
+        # Get the reviews
+    page_number = request.GET.get('page')
+    try:
+        page_obj = products_paginater.get_page(page_number)  # returns the desired page object
+    except PageNotAnInteger:
+        # if page_number is not an integer then assign the first page
+        page_obj = products_paginater.page(1)
+    except EmptyPage:
+        # if page is empty then return last page
+        page_obj = products_paginater.page(products_paginater.num_pages)
+    context = {
+        'page_obj': page_obj,
+        'products': products,
+        'product_count': product_count,
+
+    }
+    
+    return render(request,'store/store.html',context)
+
+
+
+def price_low(request):
+    products = Product.objects.all().filter(is_available=True).order_by('price')
+    product_count = products.count()
+    products_paginater = Paginator(products,8)
+    
+    # page_num = request.GET.get('page')
+    
+    # page = products_paginater.get_page(page_num)
+    
+        # Get the reviews
+    page_number = request.GET.get('page')
+    try:
+        page_obj = products_paginater.get_page(page_number)  # returns the desired page object
+    except PageNotAnInteger:
+        # if page_number is not an integer then assign the first page
+        page_obj = products_paginater.page(1)
+    except EmptyPage:
+        # if page is empty then return last page
+        page_obj = products_paginater.page(products_paginater.num_pages)
+    context = {
+        'page_obj': page_obj,
+        'product_count': product_count,
+        'products': products,
+
+
+    }
+    return render(request,'store/store.html',context)
+    

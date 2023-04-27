@@ -12,54 +12,23 @@
             <h4 class="card-title mb-4">Billing Address</h4>
             <form action="{% url 'place_order' %}" method="POST">
               {% csrf_token %}
-              <div class="form-row">
-                <div class="col form-group">
-                  <label for="">First Name</label>
-                  <input type="text" name="first_name" class="form-control" required>
-                </div>
-                <div class="col form-group">
-                  <label for="">Last Name</label>
-                  <input type="text" name="last_name" class="form-control" required>
-                </div>
+
+              <hr>
+              {% for address in addresses %}
+              <div>
+                <input type="radio" name="shipping_address" class="addres_sel" required value="{{ address.id }}" onchange="addressChange('{{ address.id }}')">
+                <h6>{{ address.name }} </h6><br>
+                {{ address.address1 }}<br>
+                {% if address.address2 %}
+                {{ address.address2 }}<br>
+                {% endif %}
+                {{ address.city }}, {{ address.state }} {{ address.pincode }}<br>
+                {{ address.country }}
               </div>
-              <div class="form-row">
-                <div class="col form-group">
-                  <label for="">Email</label>
-                  <input type="email" name="email" class="form-control" required>
-                </div>
-                <div class="col form-group">
-                  <label for="">Phone Number</label>
-                  <input type="text" name="phone" class="form-control" required>
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="col form-group">
-                  <label for="">Address Line 1</label>
-                  <input type="text" name="address_line_1" class="form-control" required>
-                </div>
-                <div class="col form-group">
-                  <label for="">Address Line 2</label>
-                  <input type="text" name="address_line_2" class="form-control">
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="col form-group">
-                  <label for="">City</label>
-                  <input type="text" name="city" class="form-control" required>
-                </div>
-                <div class="col form-group">
-                  <label for="">State</label>
-                  <input type="text" name="state" class="form-control" required>
-                </div>
-                <div class="col form-group">
-                  <label for="">Country</label>
-                  <input type="text" name="country" class="form-control" required>
-                </div>
-                </div>
-                <div class="form-row">
-                  <label for="">Order Note</label>
-                  <textarea name="order_note" rows="2" class="form-control"></textarea>
-                </div>
+              <hr>
+              {% endfor %}
+              <h5>Dont have Address! <a href="{% url 'add_address' %}?next={{request.path}}">Add a new address then place_order</a></h5>
+    
 
         </div>
     </div> <!-- card.// -->

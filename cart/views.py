@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from store.models import Product,Variations
+from accounts.models import Address
 from .models import Cart,CartItem
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
@@ -200,10 +201,13 @@ def cart(request,Total=0,quantity=0,cart_items=0):
 @login_required(login_url="login")
 def checkout(request,Total=0,quantity=0,cart_items=0):
     tax = 0 
-    grand_total=0
+    grand_total=0   
+    addresses=[0,0]
     try:
         if request.user.is_authenticated:
             cart_items = CartItem.objects.filter(user=request.user,is_active=True)
+            addresses = Address.objects.filter(user=request.user)
+            
         else:
             cart = Cart.objects.get(cart_id = _Cart_id(request))
             cart_items = CartItem.objects.filter(cart=cart,is_active=True)
@@ -224,6 +228,7 @@ def checkout(request,Total=0,quantity=0,cart_items=0):
         'cart_items': cart_items,
         'tax'      : tax,
         'grand_total': grand_total,
+        'addresses':addresses,
     }
 
     return render(request,'store/checkout.html',context)

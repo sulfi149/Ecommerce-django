@@ -1,10 +1,10 @@
 from django.shortcuts import render,redirect,get_object_or_404
-from .models import Account,UserProfile
+from .models import Account,UserProfile,Address,Return_request
 from django.contrib import messages,auth
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 from .forms import RegistrationForm,UserForm,UserProfileForm
-from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from cart.models import Cart,CartItem
 from orders.models import Order,OrderProduct
 from cart.views import _Cart_id
@@ -299,4 +299,58 @@ def order_detail(request,order_id):
     }
 
     return render(request,'accounts/order_detail.html',context)
-       
+
+def address_manage(request):
+    try:
+        address = Address.objects.filter(user=request.user)
+        context = {
+            'addresss':address,
+        }
+    except:
+        pass    
+    return render(request,'accounts/address.html',context)       
+
+def add_address(request):
+    if request.method == "POST":
+            user = request.user
+            name = request.POST.get('first_name')  
+            address1 = request.POST.get('address_line_1')
+            address2 = request.POST.get('address_line_2')
+            city = request.POST.get('city')
+            phone1 = request.POST.get('phone1')
+            phone2 = request.POST.get('phone2')
+            state = request.POST.get('state')
+            country = request.POST.get('country')
+            pincode = request.POST.get('pincode')
+            Address.objects.create(user=user,name=name,address1=address1,address2=address2,city=city,
+                                   phone1=phone1,phone2=phone2,state=state,country=country,pincode=pincode)
+            url = request.META.get('HTTP_REFERER')
+            try:
+                query = requests.utils.urlparse(url).query
+                params = dict(x.split('=')for x in query.split('&'))
+                if 'next' in params:
+                    nextPage = params['next']
+                    return redirect(nextPage)
+            except:
+                print('error')
+            return redirect('address_manage')
+    return render(request,'accounts/add_address.html')
+
+def user_cancel_order(request,order_id):
+        order =  Order.objects.get(id=order_id)
+        order.status = 'Cancelled'
+        order.save()
+        return redirect('my_orders')
+def return_order(request,order_id):
+    current_user= request.user
+    order = Order.objects.get(id=order_id)
+    if request.method == "POST":
+        reason = request.POST['reason']
+        return_request = Return_request.objects.create(
+            user=current_user,reason=reason,order_number=order.order_number
+        )
+        return_request.save()
+        order.status = 'Return Requested'
+        order.save()
+        return redirect('home')   
+    return render(request,'accounts/return_order.html',{'order': order})

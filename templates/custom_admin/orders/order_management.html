@@ -1,0 +1,103 @@
+{% extends 'custom_admin/admin_dashboard.html' %}
+{% load static %}
+
+  
+{% block content %}
+<section style="margin-top: 5rem;"></section>
+
+<div class="col-12">
+    <div class="card recent-sales overflow-auto">
+      
+      <div class="filter">
+        <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+          <li class="dropdown-header text-start">
+            <h6>Filter</h6>
+          </li>
+
+          <li><a class="dropdown-item" href="#">Today</a></li>
+          <li><a class="dropdown-item" href="#">This Month</a></li>
+          <li><a class="dropdown-item" href="#">This Year</a></li>
+        </ul>
+      </div>
+
+      <div class="card-body">
+       
+        <table class="table table-borderless datatable">
+          <thead>
+            <tr>
+                <tr>
+                    <th scope="col">Order No</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Update</th>
+                    <th scope="col">Cancel</th>
+                  </tr>
+              
+            </tr>
+          </thead>
+          <tbody>
+            {% for order in  orders%}
+            <tr>
+                <td>{{order.order_number}}</td>
+                <td><a style="text-decoration: none; color: rgb(85, 87, 219);" href="{% url 'order_detail_admin' order.id %}">{{ order.full_name}}</a><br>
+                <td>{{order.shipping.user.email}}</td>    
+                <td>{{order.shipping.phone1}}</td>
+                <td>{{order.created_at}}</td>
+                <td><span class="badge bg-success">{{ order.status}}</span> <br>
+                <td>
+                    {%  if order.status == 'Return Requested' %}
+                    <form action="{% url 'returnUpdate' order.id %}" method="POST">
+                      {% csrf_token %}
+                      <button type="submit"  class="btn btn-outline-yellow">Accepet</button>
+                    </form>
+                    {% elif order.status == 'Return Accept' %}
+                    <p>hai</p>
+                    {% else %}
+                    <form action="{% url 'adminOrderUpdate' order.id %}" method="POST">
+                      {% csrf_token %}
+                      <button type="submit"  class="btn btn-outline-info btn-sm">Update</button>
+                    </form>
+                    {% endif %}
+                  </td>
+                <td>
+                    <form action="{% url 'cancelorder' order.id %}" method="POST">
+                        {% csrf_token %}
+                        {% if order.status == 'Cancelled'  %}
+                        <button type="" class="btn btn-outline-danger btn-sm ">Cancelled</button>
+                        {% else %}
+                        <button type="submit" onclick="showConfirm()" class="btn btn-outline-danger btn-sm ">Cancel</button>
+                        {% endif %}
+                      </form>
+                  </td> 
+            </tr>
+            
+
+            {% endfor %}
+          
+          </tbody>
+        </table>
+
+      </div>
+
+    </div>
+  </div>
+  </section>
+  <script>
+    function showConfirm() {
+      var confirmed = confirm("Are you sure you want to Cancel this Order?");
+  
+      if (confirmed) {
+          // Perform the action if the user clicks "OK"
+      } else {
+          // Cancel the action if the user clicks "Cancel"
+      }
+  }
+  </script>
+
+
+  
+  {% endblock  %}

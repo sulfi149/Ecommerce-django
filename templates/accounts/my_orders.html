@@ -23,6 +23,8 @@
                                 <th scope="col">Phone Number</th>
                                 <th scope="col">Order Date</th>
                                 <th scope="col">Order Total</th>
+                                <th scope="col">Order Status</th>
+                                <th scope="col">Return Order</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -30,9 +32,29 @@
                               <tr>
                                 <th scope="row"><a href="{% url 'order_detail' order.order_number %}">{{order.order_number}}</a></th>
                                 <td>{{order.full_name}}</td>
-                                <td>{{order.phone}}</td>
+                                <td>{{order.shipping.phone1}}</td>
                                 <td>{{order.created_at}}</td>
                                 <td>{{order.order_total}}</td>
+                                <td><span class="badge bg-success">{{ order.status}}</span> <br>
+                                <td>
+                                   <form action="#" method="POST">  
+                                    
+                                    {% csrf_token %}
+                                    
+                                    <input type="hidden" class="can" value="{{order.id}}">
+                                    {% if order.status == 'Cancelled'  %}
+                                    <button type="" id="cancel-btn"  class="btn btn-outline-info btn-sm ">Cancelled</button>
+                      
+                                    {% elif order.status == 'Delivered' %}
+                                    <button type="submit" id="cancel-"  class="btn btn-outline-info btn-sm "><a href="{% url 'return_order' order.id %}">Return</a></button>
+                                    {% elif order.status == 'Return Requested' %}
+                                    <button type="" id="cancel-btn"  class="btn btn-outline-info btn-sm ">Return Requested</button>
+                      
+                                    {% else %}
+                                    <button type="submit" id="cancel-btn"  class="btn btn-outline-danger btn-sm "><a href="{% url 'user_cancel_order' order.id %}">Cancel</a></button>
+                                    {% endif %}
+                                     </form>
+                                   </td>
                               </tr>
                               {% endfor %}
                             </tbody>

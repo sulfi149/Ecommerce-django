@@ -13,10 +13,10 @@
 					<div class="card-body">
 						<p class="card-text mb-0">{{order.full_name}}</p>
 						<p class="card-text mb-0">{{order.full_address}}</p>
-						<p class="card-text mb-0">{{order.city}}, {{order.state}}</p>
-						<p class="card-text mb-0">{{order.country}}</p>
-						<p class="card-text mb-0">{{order.email}}</p>
-						<p class="card-text mb-0">{{order.phone}}</p>
+						<p class="card-text mb-0">{{order.shipping.city}}, {{order.shipping.state}}</p>
+						<p class="card-text mb-0">{{order.shipping.country}}</p>
+						<p class="card-text mb-0">{{order.user.email}}</p>
+						<p class="card-text mb-0">{{order.shipping.phone}}</p>
 						{% if order.order_note %}
 						<b>Order Note: </b> {{order.order_note}}
 						{% endif %}
@@ -102,10 +102,14 @@
                 <p class="text-center mb-3">
                     <img src="{% static 'store/images/misc/payments.png'%}" height="26">
                 </p>
+                <form action="{% url 'order_place_cod' %}" method="POST">
+                    {% csrf_token %}
+                <button type="submit" name="cod" value="{{shipping_id}}" class="btn btn-primary btn-block">COD(cash on delivery)</button>
+                </form><br>
                 <div id="paypal-button-container">
-                    <!-- PayPal Button Will Load -->
+                   <!-- PayPal Button Will Load -->
                 </div>
-            </div> <!-- card-body.// -->
+            </div> <!-- card-body.// --> 
             </div> <!-- card.// -->
     
     </aside> <!-- col.// -->

@@ -1,6 +1,10 @@
 from django.db import models
-from accounts.models import Account
+from accounts.models import Account,Address
 from store.models import Product, Variations
+import datetime
+# from datetime import datetime
+
+current_date = datetime.date.today()
 
 
 
@@ -18,41 +22,44 @@ class Payment(models.Model):
 
 class Order(models.Model):
     STATUS = (
-        ('New', 'New'),
-        ('Accepted', 'Accepted'),
-        ('Completed', 'Completed'),
+        ('Placed', 'Placed'),
+        ('Shipped', 'Shipped'),
+        ('Out For Delivery', 'Out For Delivery'),
+        ('Delivered', 'Delivered'),
         ('Cancelled', 'Cancelled'),
     )
 
     user = models.ForeignKey(Account, on_delete=models.SET_NULL, null=True)
     payment = models.ForeignKey(Payment, on_delete=models.SET_NULL, blank=True, null=True)
+    payment_mode= models.CharField(max_length=150, null=False, default="Pending")
     order_number = models.CharField(max_length=20)
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
+    first_name = models.CharField(max_length=50,blank=True)
+    last_name = models.CharField(max_length=50,blank=True)
     phone = models.CharField(max_length=15)
     email = models.EmailField(max_length=50)
-    address_line_1 = models.CharField(max_length=50)
-    address_line_2 = models.CharField(max_length=50, blank=True)
-    country = models.CharField(max_length=50)
-    state = models.CharField(max_length=50)
-    city = models.CharField(max_length=50)
+    shipping = models.ForeignKey(Address,on_delete=models.CASCADE,blank=True,null=True)
     order_note = models.CharField(max_length=100, blank=True)
     order_total = models.FloatField()
     tax = models.FloatField()
-    status = models.CharField(max_length=10, choices=STATUS, default='New')
+    status = models.CharField(max_length=30, choices=STATUS, default='Placed')
     ip = models.CharField(blank=True, max_length=20)
     is_ordered = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    Order_day  = models.IntegerField(default = current_date.day)
+    Order_month  = models.IntegerField(default = current_date.month)
+    Order_year  = models.IntegerField(default = current_date.year)
+  
+    
 
     def full_name(self):
-        return f'{self.first_name} {self.last_name}'
+        return self.shipping.name
 
     def full_address(self):
-        return f'{self.address_line_1} {self.address_line_2}'
+        return f'{self.shipping.address1} {self.shipping.address2}'
 
     def __str__(self):
-        return self.first_name
+        return self.shipping.name
 
 
 class OrderProduct(models.Model):

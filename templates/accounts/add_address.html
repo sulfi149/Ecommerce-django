@@ -1,0 +1,92 @@
+{% extends 'store/base.html' %}
+{% load static %}
+{% block content %}
+<section class="section-conten padding-y bg">
+
+    <div class="container">
+        <div class="row">
+          {% include 'store/includes/dashboard_sidebar.html'%}
+        <main class="col-md-9">
+            <article class="card">
+            <header class="card-header">
+                <strong class="d-inline-block mr-3">Add New Address</strong>
+                
+            </header>
+            <div class="card-body">
+                <div class="row">
+                <div class="col-md-12">
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <div class="form-row">
+                          <div class="col form-group">
+                            <label for="">Name</label>
+                            
+                            <input type="text" name="first_name" class="form-control" required>
+                          </div>
+                          <div class="col form-group">
+                            <label for="">Email</label>
+                            <input type="email" name="email" class="form-control" required>
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="col form-group">
+                            <label for="">Phone Number1</label>
+                            <input type="text" name="phone1" class="form-control" required>
+                          </div>
+
+
+                         
+                          <div class="col form-group">
+                            <label for="">Phone Number2</label>
+                            <input type="text" name="phone2" class="form-control" required>
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="col form-group">
+                            <label for="">Address Line 1</label>
+                            <input type="text" name="address_line_1" class="form-control" required>
+                          </div>
+                          <div class="col form-group">
+                            <label for="">Address Line 2</label>
+                            <input type="text" name="address_line_2" class="form-control">
+                          </div>
+                          <div class="col form-group">
+                            <label for="">Pincode</label>
+                            <input type="text" name="pincode" class="form-control">
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="col form-group">
+                            <label for="">City</label>
+                            <input type="text" name="city" class="form-control" required>
+                          </div>
+                          <div class="col form-group">
+                            <label for="">State</label>
+                            <input type="text" name="state" class="form-control" required>
+                          </div>
+                          <div class="col form-group">
+                            <label for="">Country</label>
+                            <input type="text" name="country" class="form-control" required>
+                          </div>
+                        </div>
+                        <input type="submit" value="Save" class="btn btn-primary">
+
+                    </div>
+                          
+                          
+                    </form>
+                </div>
+    
+                </div> <!-- row.// --> 
+            </div> <!-- card-body .// -->
+            
+            </article> <!-- order-group.// --> 
+        </main>
+    </div> <!-- row.// -->
+    </div>
+    
+    
+</section>
+{% endblock%}  
+
+    

@@ -12,15 +12,18 @@ urlpatterns = [
     # for forgot password.................................................................................
     path('activate/<uidb64>/<token>',views.activate,name="activate"),
     path('forgotPassword/',views.forgotPassword,name="forgotPassword"),
-    path('resetPassword_validate/<uidb64>/<token>',views.resetPassword_validate,name="resetPassword_validate"),
+    path('resetPassword_validate/<uidb64>/<token>/',views.resetPassword_validate,name="resetPassword_validate"),
     path('reset_password/',views.reset_password,name="reset_password"),
 
 
     # dashboard functionalities..............................................
-    path('my_orders/',views.my_orders,name="my_orders"),
+    path('myOrders/',views.my_orders,name="my_orders"),
     path('editUserProfile/',views.editUserProfile,name="editUserProfile"),
-    path('change_password/',views.change_password,name='change_password'),
-    path('order_detail/<int:order_id>/',views.order_detail,name='order_detail'),
-
-
+    path('changePssword/',views.change_password,name='change_password'),
+    path('orderDetail/<int:order_id>/',views.order_detail,name='order_detail'),
+    path('addressManage/',views.address_manage,name="address_manage"),
+    path('addAddress/',views.add_address,name="add_address"),
+    path('userCancelOrder/<int:order_id>/',views.user_cancel_order,name="user_cancel_order"),
+    path('retrunOrder/<int:order_id>/',views.return_order,name="return_order"),
+ 
 ]
